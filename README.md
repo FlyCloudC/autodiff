@@ -6,16 +6,16 @@ The `autodiff` package provides automatic differentiation capabilities through a
 
 ### Tape
 The `Tape[A]` struct is the central component that records all operations. It contains:
-- `insts`: Array of recorded instructions
-- `names`: Array of variable names for debugging
+- `insts : Array[Inst[A]]`: instructions
+- `names : Array[String]`: instruction names for debugging
 
 ### Primitives
 The `AllPrims[A]` struct provides common mathematical operations:
-- Unary: `neg`, `exp`, `ln`
+- Unary: `neg`, `exp`, `ln`, `sin`, `cos`
 - Binary: `add`, `sub`, `mul`, `div`
 
 ### Location Types
-`Loc[A]` represents where a value is stored:
+The `Loc[A]` represents where a value is stored:
 - `Const(A)`: Constant value
 - `Memory(Int)`: Index into the memory array
 
@@ -26,6 +26,12 @@ The `AllPrims[A]` struct provides common mathematical operations:
 fn[A] Tape::new() -> Self[A]
 ```
 Creates a new empty tape.
+
+### Constant Creation
+```mbt
+fn[A] constant(x : A) -> Loc[A]
+```
+Creates a constant.
 
 ### Variable Creation
 ```mbt
@@ -51,12 +57,21 @@ fn[A] Tape::eval(Self[A]) -> Array[A]
 ```
 Evaluates all recorded operations and returns the memory array.
 
+The result of the i-th instruction is stored at the i-th position in the memory array.
+
 ### Differentiation
 ```mbt
 fn[A : Diffable] Tape::diff_forward(Self[A], Array[A], wrt~ : Int = ..) -> Array[A]
-fn[A : Diffable] Tape::diff_backward(Self[A], Array[A]) -> Array[A]
+fn[A : Diffable] Tape::diff_backward(Self[A], Array[A], wrt~ : Int = ..) -> Array[A]
 ```
 Compute derivatives using forward or reverse mode automatic differentiation.
+
+The `wrt` parameter (short for "with respect to") determines which variable's derivative is computed.
+
+- In **forward mode** (`diff_forward`), the tape computes the derivative of every intermediate value with respect to the variable at index `wrt`. This is efficient when you need derivatives with respect to a single input variable.
+- In **backward mode** (`diff_backward`), the tape computes the derivative of a single output (typically the last computed value) with respect to every input variable. This is efficient when you have many input variables but only one output.
+
+### Diffable Trait
 
 The `Diffable` trait is required for types that can be used with automatic differentiation:
 ```mbt
