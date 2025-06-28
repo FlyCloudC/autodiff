@@ -21,7 +21,7 @@ pub(all) struct Tape[A] {
   insts : Array[Inst[A]]
   names : Array[String]
 }
-fn[A : Diffable] Tape::diff_backward(Self[A], Array[A]) -> Array[A]
+fn[A : Diffable] Tape::diff_backward(Self[A], Array[A], wrt~ : Int = ..) -> Array[A]
 fn[A : Diffable] Tape::diff_forward(Self[A], Array[A], wrt~ : Int = ..) -> Array[A]
 fn[A : Show] Tape::dump(Self[A], pad_1~ : Int = .., pad_2~ : Int = ..) -> String
 fn[A] Tape::eval(Self[A]) -> Array[A]

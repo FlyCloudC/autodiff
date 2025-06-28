@@ -60,9 +60,13 @@ pub fn[A : Diffable] diff_forward(
 }
 
 ///|
-pub fn[A : Diffable] diff_backward(self : Tape[A], m : Array[A]) -> Array[A] {
+pub fn[A : Diffable] diff_backward(
+  self : Tape[A],
+  m : Array[A],
+  wrt~ : Int = -1
+) -> Array[A] {
   let insts = self.insts
-  let wrt = insts.length() - 1
+  let wrt = if wrt < 0 { insts.length() + wrt } else { wrt }
   // d is diff memory.
   // d[i] = d(x_wrt) / d(x_i)
   let d = Array::make(insts.length(), A::zero())
