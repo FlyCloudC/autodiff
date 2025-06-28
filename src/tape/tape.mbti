@@ -1,0 +1,42 @@
+package "FlyCloudC/autodiff/tape"
+
+// Values
+fn[A] constant(A) -> Loc[A]
+
+// Types and methods
+pub(all) enum Inst[A] {
+  Var(A)
+  App1((A) -> A, Loc[A], diff~ : (A) -> A)
+  App2((A, A) -> A, Loc[A], Loc[A], diff_l~ : (A, A) -> A, diff_r~ : (A, A) -> A)
+}
+
+pub enum Loc[A] {
+  Const(A)
+  Memory(Int)
+}
+fn[A] Loc::at(Self[A], Array[A]) -> A
+impl[A : Show] Show for Loc[A]
+
+pub(all) struct Tape[A] {
+  insts : Array[Inst[A]]
+  names : Array[String]
+}
+fn[A : Diffable] Tape::diff_backward(Self[A], Array[A]) -> Array[A]
+fn[A : Diffable] Tape::diff_forward(Self[A], Array[A], wrt~ : Int = ..) -> Array[A]
+fn[A : Show] Tape::dump(Self[A], pad_1~ : Int = .., pad_2~ : Int = ..) -> String
+fn[A] Tape::eval(Self[A]) -> Array[A]
+fn[A] Tape::new() -> Self[A]
+fn[A] Tape::op1(Self[A], String, (A) -> A, (A) -> A) -> (Loc[A]) -> Loc[A]
+fn[A] Tape::op2(Self[A], String, (A, A) -> A, (A, A) -> A, (A, A) -> A) -> (Loc[A], Loc[A]) -> Loc[A]
+fn[A] Tape::variable(Self[A], A) -> Loc[A]
+
+// Type aliases
+
+// Traits
+pub(open) trait Diffable : Add + Mul {
+  zero() -> Self
+  one() -> Self
+}
+impl Diffable for Float
+impl Diffable for Double
+
