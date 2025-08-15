@@ -2,7 +2,7 @@
 pub fn[A : Show] Tape::dump(
   self : Tape[A],
   pad_1~ : Int = 4,
-  pad_2~ : Int = 4
+  pad_2~ : Int = 4,
 ) -> String {
   let loc_name = (loc : Loc[A]) => match loc {
     Const(x) => x.to_string()

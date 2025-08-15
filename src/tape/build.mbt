@@ -21,7 +21,7 @@ pub fn[A] op1(
   self : Tape[A],
   name : String,
   op : Op1[A],
-  diff : Op1[A]
+  diff : Op1[A],
 ) -> Op1[Loc[A]] {
   x => {
     let { insts, names } = self
@@ -37,7 +37,7 @@ pub fn[A] op2(
   name : String,
   op : Op2[A],
   diff_l : Op2[A],
-  diff_r : Op2[A]
+  diff_r : Op2[A],
 ) -> Op2[Loc[A]] {
   (l, r) => {
     let { insts, names } = self

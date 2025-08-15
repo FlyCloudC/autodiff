@@ -29,7 +29,7 @@ pub fn[A] eval(self : Tape[A]) -> Array[A] {
 pub fn[A : Diffable] diff_forward(
   self : Tape[A],
   m : Array[A],
-  wrt~ : Int = 0
+  wrt~ : Int = 0,
 ) -> Array[A] {
   let insts = self.insts
   // d is diff memory.
@@ -63,7 +63,7 @@ pub fn[A : Diffable] diff_forward(
 pub fn[A : Diffable] diff_backward(
   self : Tape[A],
   m : Array[A],
-  wrt~ : Int = -1
+  wrt~ : Int = -1,
 ) -> Array[A] {
   let insts = self.insts
   let wrt = if wrt < 0 { insts.length() + wrt } else { wrt }
