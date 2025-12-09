@@ -1,5 +1,5 @@
 ///|
-pub fn[A] at(self : Loc[A], mem : Array[A]) -> A {
+pub fn[A] Loc::at(self : Loc[A], mem : Array[A]) -> A {
   match self {
     Const(x) => x
     Memory(i) => mem[i]
@@ -7,7 +7,7 @@ pub fn[A] at(self : Loc[A], mem : Array[A]) -> A {
 }
 
 ///|
-pub fn[A] eval(self : Tape[A]) -> Array[A] {
+pub fn[A] Tape::eval(self : Tape[A]) -> Array[A] {
   let insts = self.insts
   // m is memory
   // m[i] = x_i
@@ -26,10 +26,10 @@ pub fn[A] eval(self : Tape[A]) -> Array[A] {
 }
 
 ///|
-pub fn[A : Diffable] diff_forward(
+pub fn[A : Diffable] Tape::diff_forward(
   self : Tape[A],
   m : Array[A],
-  wrt~ : Int = 0
+  wrt? : Int = 0,
 ) -> Array[A] {
   let insts = self.insts
   // d is diff memory.
@@ -60,10 +60,10 @@ pub fn[A : Diffable] diff_forward(
 }
 
 ///|
-pub fn[A : Diffable] diff_backward(
+pub fn[A : Diffable] Tape::diff_backward(
   self : Tape[A],
   m : Array[A],
-  wrt~ : Int = -1
+  wrt? : Int = -1,
 ) -> Array[A] {
   let insts = self.insts
   let wrt = if wrt < 0 { insts.length() + wrt } else { wrt }

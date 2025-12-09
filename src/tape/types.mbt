@@ -5,10 +5,10 @@ pub enum Loc[A] {
 } derive(Show)
 
 ///|
-typealias (A) -> A as Op1[A]
+type Op1[A] = (A) -> A
 
 ///|
-typealias (A, A) -> A as Op2[A]
+type Op2[A] = (A, A) -> A
 
 ///|
 pub(all) enum Inst[A] {

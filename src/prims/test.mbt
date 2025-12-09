@@ -9,14 +9,14 @@ test "tape" {
   // Now the instructions are recorded on the tape
   inspect(
     tape.dump(pad_1=2, pad_2=3),
-    content=
+    content=(
       #|x0= 2
       #|x1= 5
       #|x2= - x0
       #|x3= * x0 x1
       #|x4= + x2 x3
       #|
-    ,
+    ),
   )
 
   // Eval

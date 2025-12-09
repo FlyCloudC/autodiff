@@ -1,11 +1,11 @@
 ///|
-typealias (A) -> A as Op1[A]
+type Op1[A] = (A) -> A
 
 ///|
-typealias (A, A) -> A as Op2[A]
+type Op2[A] = (A, A) -> A
 
 ///|
-typealias @tape.(Tape, Loc)
+using @tape {type Tape, type Loc}
 
 ///|
 pub(open) trait Number: @tape.Diffable + Add + Mul + Neg + Sub + Div {
