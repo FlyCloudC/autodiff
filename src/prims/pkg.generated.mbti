@@ -1,3 +1,4 @@
+// Generated using `moon info`, DON'T EDIT IT
 package "FlyCloudC/autodiff/prims"
 
 import(
@@ -5,6 +6,8 @@ import(
 )
 
 // Values
+
+// Errors
 
 // Types and methods
 pub(all) struct AllPrims[A] {
