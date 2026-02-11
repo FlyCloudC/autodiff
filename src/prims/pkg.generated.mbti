@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "FlyCloudC/autodiff/prims"
 
-import(
-  "FlyCloudC/autodiff/tape"
-)
+import {
+  "FlyCloudC/autodiff/tape",
+}
 
 // Values
 
@@ -21,7 +21,7 @@ pub(all) struct AllPrims[A] {
   mul : (@tape.Loc[A], @tape.Loc[A]) -> @tape.Loc[A]
   div : (@tape.Loc[A], @tape.Loc[A]) -> @tape.Loc[A]
 }
-fn[A : Number] AllPrims::on(@tape.Tape[A]) -> Self[A]
+pub fn[A : Number] AllPrims::on(@tape.Tape[A]) -> Self[A]
 
 // Type aliases
 
@@ -32,6 +32,6 @@ pub(open) trait Number : @tape.Diffable + Add + Mul + Neg + Sub + Div {
   sin(Self) -> Self
   cos(Self) -> Self
 }
-impl Number for Float
-impl Number for Double
+pub impl Number for Float
+pub impl Number for Double
 
